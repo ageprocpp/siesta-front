@@ -3,7 +3,7 @@ import Header from './Header'
 import QrReader from 'react-qr-reader'
 import '../css/Home.css'
 import '../css/Scanner.css'
-import { Dialog, DialogTitle, DialogActions, DialogContent, Button } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import axios from 'axios';
 
 const API_URL: string | undefined = process.env.REACT_APP_API_URL;
