@@ -1,0 +1,27 @@
+I had trouble setting the background-color of an AppBar element and figured out it's because of a Paper element that I was using with the AppBar element. I usually use Google Chrome, but I also see this trouble in Safari.
+
+The source code is below.
+
+## Current Behavior 😯
+
+I can't set the color of the AppBar element because the css settings for MuiPaper-root class overrides the color setting of the AppBar element. Background-color for MuiPaper-root class was set by using an Paper element.
+![image](https://user-images.githubusercontent.com/46065527/138584120-8f7840a6-5ec9-4c80-831d-2bbf0d36043e.png)
+
+## Expected Behavior 🤔
+
+The background-color of the AppBar should be set by using 'color' attribute.
+
+## Your Environment 🌎
+
+<!--
+  Run `npx @mui/envinfo` and post the results.
+  If you encounter issues with TypeScript please include the used tsconfig.
+-->
+<details>
+  <summary>`npx @mui/envinfo`</summary>
+  
+```
+  Don't forget to mention which browser you used.
+  Output from `npx @mui/envinfo` goes here.
+```
+</details>

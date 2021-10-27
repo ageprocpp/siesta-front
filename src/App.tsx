@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
-import Login from './Login'
-import Home from './Home'
-import Scanner from './Scanner'
+import Login from './components/Login'
+import Home from './components/Home'
+import Scanner from './components/Scanner'
+import AdminHome from './components/AdminHome'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
@@ -11,9 +12,15 @@ function App() {
         <div className="App">
             <Router>
                 <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/scanner" component={Scanner} />
+                    <Route path="/admin">
+                        <Route exact path="/admin" component={AdminHome} />
+                        <Route exact path="/admin/login" component={Login} />
+                    </Route>
+                    <Route>
+                        <Route exact path="/" component={Home} />
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/scanner" component={Scanner} />
+                    </Route>
                 </Switch>
             </Router>
         </div>
