@@ -1,11 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Redirect } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 import Header from './Header'
 import '../css/Login.css'
 import { isExpired } from 'react-jwt'
 
-import { TextField, Box, Typography, Button, Container } from '@material-ui/core'
+import { TextField, Box, Typography, Button, Container, Dialog, DialogTitle } from '@material-ui/core'
 
 const API_URL: string | undefined = process.env.REACT_APP_API_URL;
 
@@ -13,12 +13,15 @@ if (axios.defaults.headers) {
     axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 }
 function Login() {
+    const history = useHistory();
+
     const [message, setMessage] = useState<string>('');
     const [user, setUser] = useState<string>('');
     const [PW, setPW] = useState<string>('');
 
     const token: string | null = localStorage.getItem('access_token');
-    const [isLoggedin, setIsLoggedin] = useState<boolean>(token != null && !isExpired(token));
+    const isLoggedin = token != null && !isExpired(token);
+    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
     const changeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUser(event.target.value);
@@ -30,18 +33,17 @@ function Login() {
     const redirectPath = user === 'admin' ? '/admin' : '/';
 
     const handleAuth = () => {
-        let data = { "deco_id": user, "pw": PW };
-        axios.post(API_URL + "/auth/login", JSON.stringify(data)).then(res => {
+        setIsDialogOpen(true);
+        axios.post(API_URL + "/auth/login", { "deco_id": user, "pw": PW }).then(res => {
             let resBody = JSON.parse(JSON.stringify(res.data));
             localStorage.setItem("access_token", resBody.token);
             localStorage.setItem("User", user);
-            setIsLoggedin(true);
-            console.log(redirectPath);
+            history.push('/');
         }).catch(error => {
             setUser("");
             setPW("");
             setMessage("Authentication failed");
-            alert(error);
+            setTimeout(() => setIsDialogOpen(false), 1000);
         })
     }
     return (
@@ -58,6 +60,9 @@ function Login() {
                     <Button onClick={handleAuth} variant="contained" color="primary" disabled={!user || !PW}>Login</Button>
                 </Box>
             </Container>
+            <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+                <DialogTitle>Logging in...</DialogTitle>
+            </Dialog>
         </>
     );
 }

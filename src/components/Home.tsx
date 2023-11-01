@@ -65,7 +65,11 @@ const decoList = {
     "eizoken": "駒場映像研",
     "nogei": "農芸部",
     "mokko": "木工同好会",
-    "cg": "CG同好会"
+    "cg": "CG同好会",
+    "budokan-in": "武道館入口",
+    "budokan-out": "武道館出口",
+    "tosho-in": "図書スペ入口",
+    "tosho-out": "図書スペ出口"
 }
 
 const API_URL: string | undefined = process.env.REACT_APP_API_URL;
@@ -83,7 +87,7 @@ const periods = [
     "18:00", "18:10", "18:20", "18:30", "18:40", "18:50",
 ];
 
-function Home() {
+function Home(props: any) {
     const history = useHistory();
     const classes = useStyles();
 
@@ -92,7 +96,6 @@ function Home() {
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
     const [summaryRows, setSummaryRows] = useState<Object[]>([]);
-
     let summaryColumns: GridColDef[] = useMemo(() => {
         let res: GridColDef[] = [];
         res.push({ field: "day", headerName: "Day", width: 100, align: "center", headerAlign: "center", sortable: false });
@@ -101,7 +104,6 @@ function Home() {
             res.push({ field: period, headerName: period, width: 100, align: "center", headerAlign: "center", sortable: false });
         return res;
     }, []);
-
     const handleGetDecoSummary = () => {
         axios.post(API_URL + '/util/deco/summary', { token: localStorage.getItem("access_token") })
             .then(res => {
@@ -123,7 +125,7 @@ function Home() {
         return (
             <Container className={classes.container} >
                 <Typography component="h1" variant="h5" style={{ margin: 20 }}>デコ受付概況</Typography>
-                <Button onClick={handleGetDecoSummary} variant="contained" color="primary" style={{ marginTop: 10, marginLeft: 20 }}>表示</Button>
+                <Button onClick={handleGetDecoSummary} variant="contained" color="primary" style={{ marginTop: 10, marginLeft: 20 }}>更新</Button>
                 <DataGrid rows={summaryRows} columns={summaryColumns} style={{ height: 400, margin: 20 }} disableColumnMenu={true} />
             </Container>
         );

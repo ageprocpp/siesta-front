@@ -45,7 +45,13 @@ const decoList = {
     "eizoken": "駒場映像研",
     "nogei": "農芸部",
     "mokko": "木工同好会",
-    "cg": "CG同好会"
+    "cg": "CG同好会",
+    "entrance": "入口",
+    "exit": "出口",
+    "budokan-in": "武道館入口",
+    "budokan-out": "武道館出口",
+    "tosho-in": "図書スペ入口",
+    "tosho-out": "図書スペ出口"
 }
 
 interface Props {
